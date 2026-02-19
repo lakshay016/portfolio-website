@@ -1,34 +1,38 @@
-'use client'; // Required for buttons to work
+'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Sun, Moon } from 'lucide-react';
+
+type Theme = 'dark' | 'light';
 
 export default function ThemeSwitcher() {
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState<Theme>('dark');
 
-  // This effect changes the "data-theme" attribute on the whole website
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
-  const themes = [
-    { name: 'dark', class: 'bg-slate-900' },
-    { name: 'blue', class: 'bg-blue-900' },
-    { name: 'green', class: 'bg-green-900' },
-    { name: 'purple', class: 'bg-purple-900' },
-  ];
+  const toggleTheme = () => {
+    const nextTheme: Theme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(nextTheme);
+    localStorage.setItem('theme', nextTheme);
+  };
+
+  const isDark = theme === 'dark';
 
   return (
-    <div className="flex gap-4 mt-6">
-      {themes.map((t) => (
-        <button
-          key={t.name}
-          onClick={() => setTheme(t.name)}
-          className={`h-8 w-8 rounded-full border-2 transition-all hover:scale-110 ${t.class} ${
-            theme === t.name ? 'border-accent' : 'border-transparent'
-          }`}
-          title={`Switch to ${t.name} theme`}
-        />
-      ))}
-    </div>
+    <button
+      type="button"
+      onClick={toggleTheme}
+      className="group flex h-10 w-10 items-center justify-center rounded-full bg-transparent transition-colors hover:bg-accent/10"
+      aria-label="Toggle between dark and light theme"
+      title={`Switch to ${isDark ? 'light' : 'dark'} mode`}
+    >
+      {isDark ? (
+        <Sun className="h-5 w-5 text-slate-400 transition-all group-hover:text-accent-bright" />
+      ) : (
+        <Moon className="h-5 w-5 text-slate-400 transition-all group-hover:text-accent-bright" />
+      )}
+    </button>
   );
 }

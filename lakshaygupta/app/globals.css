@@ -2,41 +2,50 @@
 
 
 :root {
-  /* Default: Dark */
   --background: #020617;
   --foreground: #f8fafc;
   --accent: #94a3b8;
+  --accent-bright: #e2e8f0;
+  --accent-glow: rgba(148, 163, 184, 0.4);
 }
 
-[data-theme='blue'] {
-  --background: #082f49;
-  --foreground: #f0f9ff;
-  --accent: #38bdf8;
-}
 
-[data-theme='green'] {
-  --background: #064e3b;
-  --foreground: #ecfdf5;
-  --accent: #34d399;
-}
 
-[data-theme='purple'] {
-  --background: #2e1065;
-  --foreground: #faf5ff;
-  --accent: #a855f7;
-}
-
-/* 2. CONNECT TO TAILWIND V4 THEME ENGINE */
 @theme inline {
   --color-primary: var(--background);
   --color-secondary: var(--foreground);
   --color-accent: var(--accent);
+  --color-accent-bright: var(--accent-bright);
 }
 
-/* 3. BASE STYLES */
+* {
+  box-sizing: border-box;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  transition: background-color 0.5s ease, color 0.5s ease;
+  transition: background-color 0.35s ease, color 0.35s ease;
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent), transparent 55%);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  opacity: 0;
+  animation: fade-up 0.7s ease-out forwards;
 }
