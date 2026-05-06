@@ -4,6 +4,13 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Github, Linkedin, FileText } from 'lucide-react';
 
+type Project = {
+  title: string;
+  description: string;
+  tags: string[];
+  link?: string;
+};
+
 const PROFILE = {
   name: "Lakshay Gupta",
   role: "Software Developer",
@@ -13,7 +20,7 @@ const PROFILE = {
     "Recently, I’ve worked on course and team projects in Java and Python, including an API-driven recipe app and an ML classifier using decision trees and random forests.",
     "I’m currently looking for opportunities to learn fast and contribute to real-world software."
   ],
-  resumeLink: "#",
+  resumeLink: "/lakshay-gupta-resume.pdf",
 };
 
 const EXPERIENCE = [
@@ -25,48 +32,41 @@ const EXPERIENCE = [
   }
 ];
 
-const PROJECTS = [
+const PROJECTS: Project[] = [
   {
     title: "LakshayEats — Food Journal",
     description: "Built modular service layers using Clean Architecture / SOLID. Integrated Spoonacular API via REST; stored user data in Supabase. Wrote unit tests and collaborated via GitHub workflows.",
     tags: ["Java", "REST APIs", "Spoonacular API", "Supabase", "JUnit", "Git"],
-    link: "#"
   },
   {
     title: "First-World Country Classifier",
     description: "Built an end-to-end ML pipeline with a 98% classification accuracy. Implemented decision trees and random forests by hand, benchmarking against scikit-learn. Emphasized modularity and reproducibility.",
     tags: ["Python", "Gradio", "sci-kit-learn"],
-    link: "#"
   },
   {
     title: "Columns (MIPS Assembly)",
     description: "Implemented a Columns-style falling-block puzzle game in MIPS with menu and gameplay loop. Built difficulty modes by tuning gravity timing and acceleration. Implemented match detection and input controls.",
     tags: ["MIPS Assembly"],
-    link: "#"
   },
   {
     title: "ReturnX",
     description: "Top-5 placement out of 34 teams at Hack the Future 2025. Co-designed UX flows in Figma and contributed to product strategy and business analysis. Collaborated with backend developers.",
     tags: ["Figma", "React", "Gemini API"],
-    link: "#"
   },
   {
     title: "Text Adventure Game",
     description: "Built branching story paths with inventory logic and CLI interaction.",
     tags: ["Python", "JSON"],
-    link: "#"
   },
   {
     title: "Library Management System",
     description: "Implemented role-based access and CRUD workflows via CLI. Added safe input handling and logging, reducing input errors. Implemented authentication and structured persistence in SQLite.",
     tags: ["Python", "PosgresSQL", "CLI"],
-    link: "#"
   },
   {
     title: "Recreation of Pong",
     description: "Implemented 3 AI difficulty modes with OOP logic, scoring, and GUI menu.",
     tags: ["Python", "PyGame"],
-    link: "#"
   }
 ];
 
@@ -123,7 +123,7 @@ export default function Home() {
 
             <div className="mt-8 flex items-center gap-5">
               <a
-                href="https://linkedin.com/in/lakshaygupta2006"
+                href="https://www.linkedin.com/in/lakshaygupta2006/"
                 target="_blank"
                 rel="noreferrer"
                 className="text-slate-400 hover:text-accent-bright transition-colors"
@@ -132,7 +132,7 @@ export default function Home() {
                 <Linkedin className="h-6 w-6" />
               </a>
               <a
-                href="https://github.com/lakshaygupta"
+                href="https://github.com/lakshay016"
                 target="_blank"
                 rel="noreferrer"
                 className="text-slate-400 hover:text-accent-bright transition-colors"
@@ -201,10 +201,14 @@ export default function Home() {
                   className="group relative flex flex-col items-start rounded-md border border-transparent p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/30 hover:bg-accent/10 hover:shadow-[0_16px_40px_-26px_var(--accent-glow)]"
                 >
                   <h3 className="text-base font-semibold text-secondary group-hover:text-accent transition-colors">
-                    <a href={project.link}>
-                      <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block" />
-                      {project.title}
-                    </a>
+                    {project.link ? (
+                      <a href={project.link}>
+                        <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block" />
+                        {project.title}
+                      </a>
+                    ) : (
+                      <span>{project.title}</span>
+                    )}
                   </h3>
                   <p className="mt-2 text-sm leading-normal text-slate-400">
                     {project.description}
